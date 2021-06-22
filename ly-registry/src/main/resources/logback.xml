@@ -11,9 +11,10 @@
         </encoder>
     </appender>
 
+    <!-- 配置日志输出到Graylog服务 -->
     <appender name="GELF" class="de.siegmar.logbackgelf.GelfUdpAppender">
         <!-- Graylog服务的地址 -->
-        <graylogHost>192.168.58.183</graylogHost>
+        <graylogHost>ly-graylog</graylogHost>
         <!-- UDP Input端口 -->
         <graylogPort>12201</graylogPort>
         <!-- 最大GELF数据块大小（单位：字节），508为建议最小值，最大值为65467 -->
@@ -37,11 +38,16 @@
             </fullPatternLayout>
             <!-- 配置应用名称（服务名称），通过staticField标签可以自定义一些固定的日志字段 -->
             <staticField>app_name:ly-registry</staticField>
+            <staticField>os_arch:${os.arch}</staticField>
+            <staticField>os_name:${os.name}</staticField>
+            <staticField>os_version:${os.version}</staticField>
         </encoder>
     </appender>
+
 
     <root level="info">
         <appender-ref ref="GELF" />
         <appender-ref ref="consoleLog" />
     </root>
+
 </configuration>

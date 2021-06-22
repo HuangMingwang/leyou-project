@@ -37,7 +37,7 @@
                 <pattern>%d - [%thread] %-5level %logger{35} - %msg%n</pattern>
             </fullPatternLayout>
             <!-- 配置应用名称（服务名称），通过staticField标签可以自定义一些固定的日志字段 -->
-            <staticField>app_name:sms-service</staticField>
+            <staticField>app_name:ly-gateway</staticField>
             <staticField>os_arch:${os.arch}</staticField>
             <staticField>os_name:${os.name}</staticField>
             <staticField>os_version:${os.version}</staticField>
