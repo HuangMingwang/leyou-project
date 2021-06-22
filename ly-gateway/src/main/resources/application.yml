@@ -1,0 +1,93 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: ly-gateway
+  cloud:
+    gateway:
+      globalcors: # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 是否将当前cors配置加入到SimpleUrlHandlerMapping中，解决options请求被拦截问题
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: # 允许哪些网站的跨域请求
+              - "http://manage.leyou.com"
+              - "http://www.leyou.com"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            allowCredentials: true # 是否允许携带cookie
+            axAge: 360000 # 这次跨域检测的有效期
+      default-filters: #默认过滤项
+        - StripPrefix=1 #去除路由前缀
+        - name: Hystrix # 指定过滤工厂名称（可以是任意过滤工厂类型）
+          args: # 指定过滤的参数
+            name: fallbackcmd  # hystrix的指令名
+            fallbackUri: forward:/hystrix/fallback # 失败后的跳转路径
+        - name: RequestRateLimiter #请求数限流 名字不能随便写
+          args:
+            key-resolver: "#{@ipKeyResolver}" # 指定一个key生成器,SpEL表达式，写法是#{@bean的名称}
+            redis-rate-limiter.replenishRate: 10 # 生成令牌的速率
+            redis-rate-limiter.burstCapacity: 10 # 桶的容量 每个ip每秒最多发起两次请求，超过则返回429异常码
+      routes:
+        - id: item-service
+          uri: lb://item-service # 注册中心中的服务名字
+          predicates:
+            - Path=/item/** #路径为这个就转发到uri
+        - id: auth-service
+          uri: lb://auth-service # 注册中心中的服务名字
+          predicates:
+            - Path=/auth/** #路径为这个就转发到url
+        - id: search-service
+          uri: lb://search-service
+          predicates:
+            - Path=/search/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+        - id: trade-service
+          uri: lb://trade-service
+          predicates:
+            - Path=/trade/**
+  redis:
+    host: ly-redis
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ly-registry:10086/eureka
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 6000 # 熔断超时时长：6000ms
+ribbon:
+  ConnectTimeout: 500 # ribbon链接超时时长
+  ReadTimeout: 2000 # ribbon读取超时时长
+logging:
+  level:
+    com.leyou: debug
+
+ly:
+  jwt:
+    pubKeyPath: /Users/huangmingwang/leyou/ssh/id_rsa.pub # 公钥地址
+  filter:
+    allowRequests:
+      "[/auth/user/login]":
+        - "POST" #登录
+      "[/auth/user/verify]":
+        - "GET" # 首页登录校验
+      "[/search/goods]":
+        - "GET"
+        - "POST" #搜索
+      "[/user/info]":
+        - "POST"
+        - "GET"
+      "[/item]":
+        - "GET"
+        - "POST"
+      "[/trade/pay/wx/notify]":
+        - "GET"
+        - "POST"

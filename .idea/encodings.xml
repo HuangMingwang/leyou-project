@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ly-auth/ly-auth-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-auth/ly-auth-pojo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-auth/ly-auth-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-item/ly-item-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-item/ly-item-pojo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-item/ly-item-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-page/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-qurtz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-registry/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-search/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-sms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-trade/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-user/ly-user-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-user/ly-user-pojo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ly-user/ly-user-service/src/main/java" charset="UTF-8" />
+  </component>
+</project>

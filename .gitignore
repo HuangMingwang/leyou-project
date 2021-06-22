@@ -1,0 +1,17 @@
+# Project exclude paths
+/ly-auth/ly-auth-pojo/target/
+/ly-auth/ly-auth-service/target/
+/ly-common/target/
+/ly-gateway/target/
+/ly-item/ly-item-api/target/
+/ly-item/ly-item-pojo/target/
+/ly-item/ly-item-service/target/
+/ly-page/target/
+/ly-qurtz/target/
+/ly-registry/target/
+/ly-search/target/
+/ly-sms/target/
+/ly-trade/target/
+/ly-user/ly-user-api/target/
+/ly-user/ly-user-pojo/target/
+/ly-user/ly-user-service/target/

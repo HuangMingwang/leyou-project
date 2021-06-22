@@ -1,0 +1,21 @@
+elasticsearch:
+  hosts: http://ly-es:9200
+server:
+  port: 8083
+spring:
+  rabbitmq:
+    host: ly-mq
+    username: leyou
+    password: 123321
+    virtual-host: /leyou
+  application:
+    name: search-service
+  jackson:
+    default-property-inclusion: non_null
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ly-registry:10086/eureka
+logging:
+  level:
+    com.leyou: debug
