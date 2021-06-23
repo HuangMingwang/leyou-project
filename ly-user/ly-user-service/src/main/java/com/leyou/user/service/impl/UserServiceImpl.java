@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.leyou.common.constants.BaseMQConstants.ExchangeConstants.SMS_EXCHANGE_NAME;
@@ -40,16 +41,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /**
+     * 发送验证码,通过给rabbitMQ发送消息
+     * @param phone 电话号码
+     */
     @Override
     public void sendVerifyCode(String phone) {
-/**
- * 发送验证码,通过给rabbitMQ发送消息
- * 生成验证码
- */
         if (!RegexUtils.isPhone(phone)) {
             throw new LyException(400, "输入的电话号码错误");
         }
-        HashMap<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
         String code = RandomStringUtils.randomNumeric(6);
         map.put("code", code);
@@ -67,14 +68,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     }
 
+    /**
+     * 注册
+     * @param user 用户信息
+     * @param code 验证码
+     */
     @Override
     @Transactional
     public void register(User user, String code) {
-        /**
-         * 先检验验证码的正确性
-         * 在检验密码的正确性
-         *
-         */
         if (!RegexUtils.isCodeValid(code)) {
             throw new LyException(400, "验证码格式错误");
         }
