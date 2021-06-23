@@ -18,8 +18,8 @@ import static com.leyou.common.constants.BaseMQConstants.RoutingKeyConstants.EVI
  */
 @Configuration
 public class MqConfig {
-    // 3分钟
-    private static final long ORDER_QUEUE_DELAY_TIME = 3000;
+    // 30分钟
+    private static final long ORDER_QUEUE_DELAY_TIME = 30000;
     /**
      * ly-order-exchange 普通任务交换机，将消息转发到死信队列
      */
