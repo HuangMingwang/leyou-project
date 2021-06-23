@@ -29,7 +29,7 @@ public class UserController {
 
     /**
      * 发送短信验证码
-     * @param phone 手机号   xx
+     * @param phone 手机号
      * @return 无
      */
     @PostMapping("/code")
