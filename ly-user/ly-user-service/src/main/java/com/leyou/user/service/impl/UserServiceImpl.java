@@ -1,7 +1,11 @@
 package com.leyou.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.leyou.common.constants.BaseRedisConstants;
+import com.leyou.common.dto.PageDTO;
 import com.leyou.common.exception.LyException;
 import com.leyou.common.utils.RegexUtils;
 import com.leyou.user.dto.UserDTO;
@@ -9,7 +13,7 @@ import com.leyou.user.entity.User;
 import com.leyou.user.mapper.UserMapper;
 import com.leyou.user.service.UserService;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,8 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.leyou.common.constants.BaseMQConstants.ExchangeConstants.SMS_EXCHANGE_NAME;
 import static com.leyou.common.constants.BaseMQConstants.RoutingKeyConstants.VERIFY_CODE_KEY;
@@ -34,11 +40,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final RabbitTemplate rabbitTemplate;
     private final StringRedisTemplate redisTemplate;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(RabbitTemplate rabbitTemplate, StringRedisTemplate redisTemplate, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(RabbitTemplate rabbitTemplate, StringRedisTemplate redisTemplate, BCryptPasswordEncoder bCryptPasswordEncoder,
+                           UserMapper userMapper) {
         this.rabbitTemplate = rabbitTemplate;
         this.redisTemplate = redisTemplate;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userMapper = userMapper;
+    }
+
+    /**
+     *
+     * @param page
+     * @return
+     */
+    @Override
+    public PageDTO<UserDTO> queryUserByPage(Page<User> page) {
+        //调用Mapper接口返回一个page对象
+        Page<User> InfoPage = userMapper.selectPage(page, null);
+        //page对象转list对象
+        List<User> list = InfoPage.getRecords();
+
+        // 封装结果
+        return new PageDTO<>(InfoPage.getTotal(), InfoPage.getPages(), UserDTO.convertEntityList(list));
     }
 
     /**
@@ -103,4 +128,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return new UserDTO(user);
     }
+
+    @Override
+    public int countUser() {
+        List<User> users = userMapper.selectList(null);
+        return users.size();
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(UserDTO userDTO) {
+        //id name phone id不能更改，其余可以更改
+        User user = userDTO.toEntity(User.class);
+        String newName = userDTO.getUsername();
+        String newPhone = userDTO.getPhone();
+        user.setPhone(newPhone);
+        user.setUsername(newName);
+        userMapper.updateById(user);
+    }
+
+
 }

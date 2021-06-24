@@ -1,14 +1,21 @@
 package com.leyou.user.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.leyou.common.dto.PageDTO;
 import com.leyou.user.dto.UserDTO;
 import com.leyou.user.entity.User;
+
 
 /**
  * @author Huang Mingwang
  * @create 2021-06-05 5:37 下午
  */
 public interface UserService extends IService<User>{
+
+     PageDTO<UserDTO> queryUserByPage(Page<User> page);
+
+
     /**
      * 发送注册短信
      * @param phone 电话号码
@@ -37,4 +44,8 @@ public interface UserService extends IService<User>{
      * @return UserDTO
      */
     UserDTO queryUserByNameAndPassword(String username, String password);
+
+    int countUser();
+
+    void updateUser(UserDTO userDTO);
 }
