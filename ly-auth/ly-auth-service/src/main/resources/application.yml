@@ -39,5 +39,5 @@ ly:
     maxFileSize: 5242880 #文件大小限制，这里是5M
   # ..
   jwt:
-    pubKeyPath: /Users/huangmingwang/leyou/ssh/id_rsa.pub # 公钥地址
-    priKeyPath: /Users/huangmingwang/leyou/ssh/id_rsa # 私钥地址
+    pubKeyPath: C:/leyou/ssh/id_rsa.pub # 公钥地址
+    priKeyPath: C:/leyou/ssh/id_rsa # 私钥地址

@@ -72,7 +72,7 @@ logging:
 
 ly:
   jwt:
-    pubKeyPath: /Users/huangmingwang/leyou/ssh/id_rsa.pub # 公钥地址
+    pubKeyPath: C:/leyou/ssh/id_rsa.pub # 公钥地址
   filter:
     allowRequests:
       "[/auth/user/login]":
