@@ -12,6 +12,8 @@ spring:
             allowedOrigins: # 允许哪些网站的跨域请求
               - "http://manage.leyou.com"
               - "http://www.leyou.com"
+              - "http://www.wl9939.top"
+              - "http://manage.wl9939.top"
             allowedMethods: # 允许的跨域ajax的请求方式
               - "GET"
               - "POST"
