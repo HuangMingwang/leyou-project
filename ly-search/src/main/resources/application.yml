@@ -16,6 +16,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://ly-registry:10086/eureka
+  instance:
+    prefer-ip-address: true
 logging:
   level:
     com.leyou: debug
+ribbon:
+  ConnectTimeout: 9000 # ribbon链接超时时长
+  ReadTimeout: 9000 # ribbon读取超时时长

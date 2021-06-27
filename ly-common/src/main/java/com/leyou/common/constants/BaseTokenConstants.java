@@ -12,5 +12,5 @@ public abstract class BaseTokenConstants {
     /**
      * domain
      */
-    public static final String DOMAIN = "leyou.com";
+    public static final String DOMAIN = "wl9939.top";
 }
