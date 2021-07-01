@@ -1,10 +1,8 @@
 package com.leyou.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.leyou.common.constants.BaseRedisConstants;
 import com.leyou.common.dto.PageDTO;
 import com.leyou.common.exception.LyException;
 import com.leyou.common.utils.RegexUtils;
@@ -24,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static com.leyou.common.constants.BaseMQConstants.ExchangeConstants.SMS_EXCHANGE_NAME;
 import static com.leyou.common.constants.BaseMQConstants.RoutingKeyConstants.VERIFY_CODE_KEY;
@@ -50,20 +47,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         this.userMapper = userMapper;
     }
 
-    /**
-     *
-     * @param page
-     * @return
-     */
-    @Override
-    public PageDTO<UserDTO> queryUserByPage(Page<User> page) {
-        //调用Mapper接口返回一个page对象
-        Page<User> InfoPage = userMapper.selectPage(page, null);
-        //page对象转list对象
-        List<User> list = InfoPage.getRecords();
 
-        // 封装结果
-        return new PageDTO<>(InfoPage.getTotal(), InfoPage.getPages(), UserDTO.convertEntityList(list));
+    @Override
+    public PageDTO<UserDTO> queryUserByPage(String key, Integer page, Integer rows) {
+        page = Math.min(page, 100);
+        rows = Math.min(rows, 5);
+
+        Page<User> info = new Page<>(page, rows);
+
+        boolean isKeyExists = StringUtils.isNoneBlank(key);
+
+        query().like(isKeyExists, "username", key)
+                .or()
+                .eq(isKeyExists, "phone", key)
+                .page(info);
+
+        List<User> list = info.getRecords();
+        return new PageDTO<>(info.getTotal(), info.getPages(), UserDTO.convertEntityList(list));
     }
 
     /**

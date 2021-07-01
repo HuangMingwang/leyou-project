@@ -1,0 +1,54 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: trade-service
+  data:
+    mongodb:
+      uri: mongodb://leyou:123@ly-mongo/carts
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://ly-mysql:3306/leyou?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123
+  rabbitmq:
+    host: ly-mq
+    username: leyou
+    password: 123321
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 80000ms
+        multiplier: 2
+    publisher-confirms: true
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: order_tx_group
+mybatis-plus:
+  type-aliases-package: com.leyou.trade.entity
+  global-config:
+    db-config:
+      id-type: INPUT # 此处的id类型选择INPUT，代表自定义
+      insert-strategy: not_null
+      update-strategy: not_null
+  type-enums-package: com.leyou.trade.entity.enums # 枚举扫描包
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://ly-registry:10086/eureka
+logging:
+  level:
+    com.leyou: debug
+ly:
+  pay:
+    wx:
+      appID: wx8397f8696b538317
+      mchID: 1473426802
+      key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+      notifyUrl: http://api.leyou88.xyz/trade/pay/wx/notify
+      spbillCreateIp: 123.12.12.123

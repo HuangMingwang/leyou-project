@@ -15,6 +15,9 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册拦截器
-        registry.addInterceptor(new UserInterceptor()).excludePathPatterns("/pay/wx/notify");
+        registry.addInterceptor(new UserInterceptor())
+                .excludePathPatterns("/pay/wx/notify")
+                .excludePathPatterns("/doc.html")
+                .excludePathPatterns("/swagger-ui.html");
     }
 }

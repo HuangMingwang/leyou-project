@@ -1,6 +1,5 @@
 package com.leyou.user.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.leyou.common.dto.PageDTO;
 import com.leyou.user.dto.UserDTO;
@@ -13,7 +12,7 @@ import com.leyou.user.entity.User;
  */
 public interface UserService extends IService<User>{
 
-     PageDTO<UserDTO> queryUserByPage(Page<User> page);
+     PageDTO<UserDTO> queryUserByPage(String key, Integer page, Integer rows);
 
 
     /**

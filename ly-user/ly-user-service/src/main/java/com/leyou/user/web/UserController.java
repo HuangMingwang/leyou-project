@@ -1,19 +1,16 @@
 package com.leyou.user.web;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.leyou.common.dto.PageDTO;
 import com.leyou.common.exception.LyException;
 import com.leyou.user.dto.UserDTO;
 import com.leyou.user.entity.User;
 import com.leyou.user.service.UserService;
-
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
@@ -89,48 +86,35 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
-    /**
-     * 查询所有用户
-     * @param page 当前页
-     * @param rows 每页条数
-     * @return 无
-     */
-    @ApiOperation("查询所有用户")
-    @GetMapping("/page")
+
+
+
+    @ApiOperation("分页查询用户信息")
+    @RequestMapping("/page")
     public ResponseEntity<PageDTO<UserDTO>> queryUserByPage(
+            @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-            @RequestParam(value = "rows", required = false, defaultValue = "5") Integer rows) {
-        //创建分页对象
-        Page<User> info =  new Page<>(page, rows);
-        PageDTO<UserDTO> userDTOPageDTO = userService.queryUserByPage(info);
-        long total = userDTOPageDTO.getItems().size();
-        long totalPage;
-        if (total<rows){
-            totalPage=total;
-        }else
-            totalPage=total/rows;
-        userDTOPageDTO.setTotal(total);
-        userDTOPageDTO.setTotalPage(totalPage);
-        return ResponseEntity.ok(userDTOPageDTO);
+            @RequestParam(value = "rows", required = false, defaultValue = "5") Integer rows
+    ) {
+      return ResponseEntity.ok(userService.queryUserByPage(key, page, rows));
     }
 
-    @ApiOperation("统计会员个数")
+    @ApiOperation("统计会员人数")
     @GetMapping("/count")
     public ResponseEntity<Integer> countUser(){
-        int count = userService.countUser();
-        return ResponseEntity.ok(count);
+        return ResponseEntity.ok(userService.countUser());
     }
 
     /**
-     * 修改用户
+     * 修改用户用户信息
      * @param userDTO 用户信息
      * @return 无
      */
-    @ApiOperation("修改用户数据")
+    @ApiOperation("修改用户信息")
     @PutMapping("/update")
     public ResponseEntity<Void> updateUser(UserDTO userDTO) {
         userService.updateUser(userDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
 }
