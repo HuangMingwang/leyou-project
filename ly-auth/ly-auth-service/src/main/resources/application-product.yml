@@ -20,10 +20,10 @@ spring:
         max-wait: 3000
     # 连接超时时间
     timeout: 3000
-  eureka:*
-client:
-  service-url:
-    defaultZone: http://ly-registry:10086/eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ly-registry:10086/eureka
 logging:
   level:
     com.leyou: debug

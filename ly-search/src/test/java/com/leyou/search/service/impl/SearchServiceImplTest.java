@@ -15,11 +15,11 @@ public class SearchServiceImplTest extends TestCase {
     private SearchService searchService;
     @Test
     public void testCreateIndexAndMapping() {
-        //searchService.createIndexAndMapping();
+        searchService.createIndexAndMapping();
     }
     @Test
     public void testLoadData() {
-        //searchService.loadData();
+        searchService.loadData();
     }
 
     public void testGetSuggestion() {
