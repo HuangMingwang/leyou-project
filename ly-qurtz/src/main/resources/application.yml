@@ -1,29 +1,3 @@
 spring:
-  redis:
-    # 主机配置，默认是localhost
-    host: ly-redis
-    # 密码，默认是没有密码
-    password:
-    # 第一个数据库，默认是0
-    database: 0
-    # 端口，默认是6379
-    port: 6379
-    #jedis连接池配置
-    jedis:
-      pool:
-        max-active: 30
-        min-idle: 5
-        max-wait: 3000
-    # 连接超时时间
-    timeout: 3000
-ly:
-  oss:
-    endpoint: oss-cn-beijing.aliyuncs.com
-    accessKeyId: LTAI5tATTKFwuDjDXByebryz
-    accessKeySecret: 730VzeEB6eRr9d3qzI6jO8hBugPkeP
-    bucketName: ly-image-hmw
-logging:
-  level:
-    com.leyou: debug
-server:
-  port: 10030
+  profiles:
+    active: test

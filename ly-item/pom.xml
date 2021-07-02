@@ -14,9 +14,6 @@
         <module>ly-item-api</module>
         <module>ly-item-pojo</module>
         <module>ly-item-service</module>
-        <module>ly-item-pojo</module>
-        <module>ly-item-api</module>
-        <module>ly-item-service</module>
     </modules>
 
     <groupId>com.leyou</groupId>

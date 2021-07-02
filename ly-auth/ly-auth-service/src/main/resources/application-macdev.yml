@@ -1,0 +1,43 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: auth-service
+  redis:
+    # 主机配置，默认是localhost
+    host: ly-redis
+    # 密码，默认是没有密码
+    password:
+    # 第一个数据库，默认是0
+    database: 0
+    # 端口，默认是6379
+    port: 6379
+    #jedis连接池配置
+    jedis:
+      pool:
+        max-active: 30
+        min-idle: 5
+        max-wait: 3000
+    # 连接超时时间
+    timeout: 3000
+  eureka:*
+client:
+  service-url:
+    defaultZone: http://ly-registry:10086/eureka
+logging:
+  level:
+    com.leyou: debug
+
+ly:
+  oss:
+    accessKeyId: LTAI5tL47UvfrMuXWU7BNvtS
+    accessKeySecret: 5QbFeTR3jritVwewbbnIKfzFRUzMwr
+    host: https://ly-image-hmw.oss-cn-beijing.aliyuncs.com    # 访问oss的bucket的域名
+    endpoint: oss-cn-beijing.aliyuncs.com # 你选择的oss服务器的地址
+    dir: "heima94" # 保存到bucket的某个子目录
+    expireTime: 1200000 # 过期时间，单位是ms
+    maxFileSize: 5242880 #文件大小限制，这里是5M
+  # ..
+  jwt:
+    pubKeyPath: /Users/huangmingwang/Documents/leyou/ssh/id_rsa.pub # 公钥地址
+    priKeyPath: /Users/huangmingwang/Documents/leyou/ssh/id_rsa # 私钥地址

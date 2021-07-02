@@ -1,0 +1,26 @@
+elasticsearch:
+  hosts: http://ly-es:9200
+server:
+  port: 8083
+spring:
+  rabbitmq:
+    host: ly-mq
+    username: leyou
+    password: 123321
+    virtual-host: /leyou
+  application:
+    name: search-service
+  jackson:
+    default-property-inclusion: non_null
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ly-registry:10086/eureka
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    com.leyou: debug
+ribbon:
+  ConnectTimeout: 9000 # ribbon链接超时时长
+  ReadTimeout: 9000 # ribbon读取超时时长

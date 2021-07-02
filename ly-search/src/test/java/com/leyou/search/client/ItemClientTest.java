@@ -27,9 +27,9 @@ public class ItemClientTest {
 
     @Test
     public void testFeign(){
-        List<CategoryDTO> list = itemClient.queryCategoryByIds(Arrays.asList(1L, 2L, 3L));
+        //List<CategoryDTO> list = itemClient.queryCategoryByIds(Arrays.asList(1L, 2L, 3L));
 
-        list.forEach(System.out::println);
+        //list.forEach(System.out::println);
 
 
 
